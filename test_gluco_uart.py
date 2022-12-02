@@ -9,14 +9,23 @@ while not get_data:
     if ser.inWaiting() != 0 :
         # Garbage input serial b'/x00/
         msg = ser.read()
-        if msg != b'\x00'  : 
-            raw_data.append(ser.readlines())
-            raw_data.append(ser.readlines())
-            print("s1 adalah {}".format(raw_data[0]))
-            print("s2 adalah {}".format(raw_data[1]))
-            get_data = True
+        print(msg)
+        print(type(msg))
+        if msg != b'\x00' :
+            if msg == b'A' :
+                raw_data.append(ser.readlines())
+                raw_data.append(ser.readlines())
+                raw_data.append(ser.readlines())
+                raw_data.append(ser.readlines())
+                print("s1 adalah {}".format(raw_data[0]))
+                print("s2 adalah {}".format(raw_data[1]))
+                print("s3 adalah {}".format(raw_data[2]))
+                print("s4 adalah {}".format(raw_data[3]))
 
+                get_data = True
+# and msg != b'\x00\x00' or msg == b'xff'
 ser.close()
+
 '''
 raw_data  = [[a,b],[]]
 
@@ -55,17 +64,20 @@ output = None
 for i in range(len(decoded_string)):
     if 'TotalValue' in decoded_string[i]:
         output = re.findall(r'TotalValue.+?(?=0\r)' , decoded_string[i])
+        final_output = output[0].split(' ')
 
-final_output = output[0].split(' ')
+        print(final_output)
+        print("Gula darah : {}".format(final_output[4]))
 
-print(final_output)
-
-print("Gula darah : {}".format(final_output[4]))
+    else :
+        
+        print("Error tidak menemukan data")
 
 '''
 TODO : 
 add to flow to ke sistem besar
-'''
+''' 
+
 # blood_glucose_clean = re.findall(r'TotalValue.*', blood_glucose_raw)
 # clean_measure = blood_glucose_clean.replace('\x00','').split('\r')
-# print(blood_glucose_clean)
+# print(blood_glucose_clean
